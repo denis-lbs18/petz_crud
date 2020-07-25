@@ -2,20 +2,22 @@ package br.com.petz.apirest.model;
 
 import java.io.Serializable;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@MappedSuperclass
 @NoArgsConstructor
-@EqualsAndHashCode
+@Data
 public abstract class EntidadeAbstrata implements Serializable {
 	private static final long serialVersionUID = 1L;
-	@Getter
-	@Setter
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	public boolean canEqual(Object obj) {
-		return obj instanceof EntidadeAbstrata;
-	}
+	public abstract boolean canEqual(Object obj);
 }

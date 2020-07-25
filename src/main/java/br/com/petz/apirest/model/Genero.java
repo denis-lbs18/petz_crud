@@ -1,12 +1,12 @@
 package br.com.petz.apirest.model;
 
 public enum Genero {
-	MASCULINO('M'), FEMININO('F');
+	MASCULINO("M"), FEMININO("F");
 
 	@SuppressWarnings("unused")
-	private Character genero;
+	private String nome;
 
-	Genero(Character genero) {
-		this.genero = genero;
+	Genero(String nome) {
+		this.nome = nome;
 	}
 }

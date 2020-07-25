@@ -2,10 +2,16 @@ package br.com.petz.apirest.model;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @NoArgsConstructor
 public class Cliente extends EntidadeAbstrata {
 	private static final long serialVersionUID = 9193246946039134665L;
@@ -15,14 +21,55 @@ public class Cliente extends EntidadeAbstrata {
 	private String nome;
 	@Getter
 	@Setter
+	private String cpf;
+	@Getter
+	@Setter
 	private Integer idade;
 	@Getter
 	@Setter
 	private Genero genero;
 	@Getter
 	@Setter
-	private String document;
+	private String email;
 	@Getter
 	@Setter
+	@OneToMany
 	private List<Endereco> endereco;
+
+	public Cliente(String nome, Integer idade, Genero genero, String email) {
+		this.nome = nome;
+		this.idade = idade;
+		this.genero = genero;
+		this.email = email;
+	}
+
+	@Override
+	public boolean canEqual(Object obj) {
+		return obj instanceof Cliente;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
+		result = prime * result + ((genero == null) ? 0 : genero.hashCode());
+		result = prime * result + ((idade == null) ? 0 : idade.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Cliente) {
+			Cliente other = (Cliente) obj;
+			return other.canEqual(this) && new EqualsBuilder().appendSuper(super.equals(other))
+					.append(other.getNome(), this.getNome()).append(other.getIdade(), this.getIdade())
+					.append(other.getGenero(), this.getGenero()).append(other.getEmail(), this.getEmail())
+					.append(this.getCpf(), other.getCpf()).append(other.getEndereco(), this.getEndereco()).isEquals();
+		}
+		return false;
+	}
 }
