@@ -1,4 +1,4 @@
-package br.com.petz.apirest.controller;
+package br.com.petz.petz_crud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.petz.apirest.exception.ClienteNaoEncontradoException;
-import br.com.petz.apirest.exception.EnderecoNaoEncontradoException;
-import br.com.petz.apirest.model.Cliente;
-import br.com.petz.apirest.model.Endereco;
-import br.com.petz.apirest.repository.ClienteRepository;
-import br.com.petz.apirest.repository.EnderecoRepository;
+import br.com.petz.petz_crud.exception.ClienteNaoEncontradoException;
+import br.com.petz.petz_crud.exception.EnderecoNaoEncontradoException;
+import br.com.petz.petz_crud.model.Cliente;
+import br.com.petz.petz_crud.model.Endereco;
+import br.com.petz.petz_crud.repository.ClienteRepository;
+import br.com.petz.petz_crud.repository.EnderecoRepository;
 
 @RestController
 @RequestMapping(path = "/clientes")

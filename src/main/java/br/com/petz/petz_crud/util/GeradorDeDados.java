@@ -1,11 +1,11 @@
-package br.com.petz.apirest.util;
+package br.com.petz.petz_crud.util;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import br.com.petz.apirest.model.Endereco;
-import br.com.petz.apirest.model.Genero;
+import br.com.petz.petz_crud.model.Endereco;
+import br.com.petz.petz_crud.model.Genero;
 
 public final class GeradorDeDados {
 	private GeradorDeDados() {

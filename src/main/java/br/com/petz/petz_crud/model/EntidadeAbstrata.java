@@ -1,4 +1,4 @@
-package br.com.petz.apirest.model;
+package br.com.petz.petz_crud.model;
 
 import java.io.Serializable;
 

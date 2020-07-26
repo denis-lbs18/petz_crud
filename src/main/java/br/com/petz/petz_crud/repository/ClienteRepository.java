@@ -1,8 +1,8 @@
-package br.com.petz.apirest.repository;
+package br.com.petz.petz_crud.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.petz.apirest.model.Cliente;
+import br.com.petz.petz_crud.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 }

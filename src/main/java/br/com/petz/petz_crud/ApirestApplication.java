@@ -1,4 +1,4 @@
-package br.com.petz.apirest;
+package br.com.petz.petz_crud;
 
 import java.util.stream.LongStream;
 
@@ -7,9 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import br.com.petz.apirest.model.Cliente;
-import br.com.petz.apirest.repository.ClienteRepository;
-import br.com.petz.apirest.util.GeradorDeDados;
+import br.com.petz.petz_crud.model.Cliente;
+import br.com.petz.petz_crud.repository.ClienteRepository;
+import br.com.petz.petz_crud.util.GeradorDeDados;
 
 @SpringBootApplication
 public class ApirestApplication {

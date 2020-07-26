@@ -1,4 +1,4 @@
-package br.com.petz.apirest.exception;
+package br.com.petz.petz_crud.exception;
 
 public class ClienteNaoEncontradoException extends RuntimeException {
 	private static final long serialVersionUID = -7213902406445617190L;
