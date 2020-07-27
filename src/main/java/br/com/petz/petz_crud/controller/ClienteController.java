@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.petz.petz_crud.exception.ClienteNaoEncontradoException;
 import br.com.petz.petz_crud.exception.EnderecoNaoEncontradoException;
+import br.com.petz.petz_crud.exception.PetNaoEncontradoException;
 import br.com.petz.petz_crud.model.Cliente;
 import br.com.petz.petz_crud.model.Endereco;
+import br.com.petz.petz_crud.model.Pet;
 import br.com.petz.petz_crud.repository.ClienteRepository;
 import br.com.petz.petz_crud.repository.EnderecoRepository;
+import br.com.petz.petz_crud.repository.PetRepository;
 
 @RestController
 @RequestMapping(path = "/clientes")
@@ -27,6 +30,8 @@ public class ClienteController {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PetRepository petRepository;
 
 	@GetMapping(value = "/listarTodos")
 	public @ResponseBody Iterable<Cliente> listarTodosOsClientes() {
@@ -47,7 +52,7 @@ public class ClienteController {
 	}
 
 	@DeleteMapping(path = { "/{id}" })
-	public ResponseEntity<?> delete(@PathVariable long id) {
+	public ResponseEntity<?> deletaClientePorId(@PathVariable long id) {
 		return clienteRepository.findById(id).map(cliente -> {
 			clienteRepository.delete(cliente);
 			return ResponseEntity.status(HttpStatus.OK).build();
@@ -108,5 +113,47 @@ public class ClienteController {
 			}
 		}).orElseThrow(() -> new EnderecoNaoEncontradoException(idEndereco));
 		return "Endereço removido";
+	}
+
+	@PostMapping(path = "/{id}/adicionarPet")
+	public @ResponseBody String adicionarPet(@PathVariable long id, @RequestBody Pet pet) {
+		clienteRepository.findById(id).map(cliente -> {
+			petRepository.save(pet);
+			cliente.adicionaPet(pet);
+			clienteRepository.save(cliente);
+			return ResponseEntity.ok().body(cliente);
+		}).orElseThrow(() -> new PetNaoEncontradoException(id));
+		return "Pet adicionado";
+	}
+
+	@PostMapping(path = "/{id}/adicionarPetPorId/{idPet}")
+	public @ResponseBody String adicionaPetPorID(@PathVariable long id, @PathVariable long idPet) {
+		petRepository.findById(idPet).map(pet -> {
+			if (clienteRepository.existsById(id)) {
+				Cliente cliente = clienteRepository.findById(id).get();
+				cliente.adicionaPet(pet);
+				clienteRepository.save(cliente);
+				return ResponseEntity.ok().body(cliente);
+			} else {
+				return new ClienteNaoEncontradoException(id);
+			}
+		}).orElseThrow(() -> new PetNaoEncontradoException(idPet));
+		return "Pet existente adicionado";
+	}
+
+	@DeleteMapping(path = "/{id}/removerPet/{idPet}")
+	public @ResponseBody String removerPet(@PathVariable long id, @PathVariable long idPet) {
+		petRepository.findById(idPet).map(pet -> {
+			if (clienteRepository.existsById(id)) {
+				Cliente cliente = clienteRepository.findById(id).get();
+				cliente.getListaPets().remove(pet);
+				petRepository.delete(pet);
+				clienteRepository.save(cliente);
+				return ResponseEntity.ok().body(cliente);
+			} else {
+				return new ClienteNaoEncontradoException(id);
+			}
+		}).orElseThrow(() -> new PetNaoEncontradoException(idPet));
+		return "Pet removido";
 	}
 }
